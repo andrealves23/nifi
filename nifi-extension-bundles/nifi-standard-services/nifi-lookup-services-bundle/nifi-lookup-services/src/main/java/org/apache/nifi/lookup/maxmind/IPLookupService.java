@@ -250,8 +250,8 @@ public class IPLookupService extends AbstractControllerService implements Record
         try {
             inetAddress = InetAddress.getByName(ipAddress);
         } catch (final IOException ioe) {
-            getLogger().warn("Could not resolve the IP for value '{}'. This is usually caused by issue resolving the appropriate DNS record or " +
-                "providing the service with an invalid IP address", coordinates, ioe);
+            getLogger().warn("Could not resolve the IP for value '{}'. This is usually caused by issue resolving the appropriate DNS record or providing the service with an invalid IP address",
+                    coordinates, ioe);
 
             return Optional.empty();
         }
@@ -385,7 +385,7 @@ public class IPLookupService extends AbstractControllerService implements Record
         final StopWatch stopWatch = new StopWatch(true);
         final DatabaseReader reader = new DatabaseReader.Builder(dbFile).build();
         stopWatch.stop();
-        getLogger().info("Completed loading of Maxmind Database.  Elapsed time was {} milliseconds.", new Object[]{stopWatch.getDuration(TimeUnit.MILLISECONDS)});
+        getLogger().info("Completed loading of Maxmind Database.  Elapsed time was {} milliseconds.", stopWatch.getDuration(TimeUnit.MILLISECONDS));
         databaseReader = reader;
         databaseChecksum = dbFileChecksum;
     }

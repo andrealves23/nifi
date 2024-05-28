@@ -141,7 +141,7 @@ public class FileAccessPolicyProvider extends AbstractConfigurableAccessPolicyPr
             // get the authorizations file and ensure it exists
             authorizationsFile = new File(authorizationsPath.getValue());
             if (!authorizationsFile.exists()) {
-                logger.info("Creating new authorizations file at {}", new Object[] {authorizationsFile.getAbsolutePath()});
+                logger.info("Creating new authorizations file at {}", authorizationsFile.getAbsolutePath());
                 saveAuthorizations(new Authorizations());
             }
 
@@ -432,7 +432,7 @@ public class FileAccessPolicyProvider extends AbstractConfigurableAccessPolicyPr
         // if we are starting fresh then we might need to populate an initial admin
         if (emptyAuthorizations) {
             if (hasInitialAdminIdentity) {
-               logger.info("Populating authorizations for Initial Admin: '" + initialAdminIdentity + "'");
+               logger.info("Populating authorizations for Initial Admin: '{}'", initialAdminIdentity);
                populateInitialAdmin(authorizations);
             }
 

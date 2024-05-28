@@ -204,4 +204,9 @@ SIL OFL 1.1
 The following binary components are provided under the SIL Open Font License 1.1
   (SIL OFL 1.1) FontAwesome (4.7.0 - https://fontawesome.com/license/free)
 
-
+<<<<<<< HEAD
+For the binary distribution of nifi-web-frontend see its 3rdpartylicenses.txt
+=======
+For the binary distribution of nifi-ui see its 3rdpartylicenses.txt
+>>>>>>> b6d3a4987a (Trigger CI pipeline)
+for additional license and notice information.

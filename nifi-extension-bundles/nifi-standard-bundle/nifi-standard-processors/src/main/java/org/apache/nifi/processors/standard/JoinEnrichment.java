@@ -509,7 +509,7 @@ public class JoinEnrichment extends BinFiles {
             try {
                 binProcessingResult = this.processBin(bin, context);
             } catch (final ProcessException e) {
-                logger.error("Failed to process bundle of {} files due to {}", new Object[] {bin.getContents().size(), e});
+                logger.error("Failed to process bundle of {} files", bin.getContents().size(), e);
 
                 final ProcessSession binSession = bin.getSession();
                 for (final FlowFile flowFile : bin.getContents()) {
@@ -518,7 +518,7 @@ public class JoinEnrichment extends BinFiles {
                 binSession.commitAsync();
                 continue;
             } catch (final Exception e) {
-                logger.error("Failed to process bundle of {} files due to {}; rolling back sessions", new Object[] {bin.getContents().size(), e});
+                logger.error("Rolling back sessions since failed to process bundle of {} files", bin.getContents().size(), e);
 
                 bin.getSession().rollback();
                 continue;
@@ -527,7 +527,9 @@ public class JoinEnrichment extends BinFiles {
             // If this bin's session has been committed, move on.
             if (!binProcessingResult.isCommitted()) {
                 final ProcessSession binSession = bin.getSession();
-                bin.getContents().forEach(ff -> binSession.putAllAttributes(ff, binProcessingResult.getAttributes()));
+                if (!context.isAutoTerminated(REL_ORIGINAL)) {
+                    bin.getContents().forEach(ff -> binSession.putAllAttributes(ff, binProcessingResult.getAttributes()));
+                }
                 binSession.transfer(bin.getContents(), REL_ORIGINAL);
 
                 // Migrate FlowFiles to our batch session. Then commit the bin session to free up any resources

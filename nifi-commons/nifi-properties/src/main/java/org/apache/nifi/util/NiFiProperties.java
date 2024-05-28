@@ -223,10 +223,12 @@ public class NiFiProperties extends ApplicationProperties {
     public static final String WEB_REQUEST_LOG_FORMAT = "nifi.web.request.log.format";
     public static final String WEB_JMX_METRICS_ALLOWED_FILTER_PATTERN = "nifi.web.jmx.metrics.allowed.filter.pattern";
 
+<<<<<<< HEAD
+=======
     // ui properties
     public static final String UI_BANNER_TEXT = "nifi.ui.banner.text";
-    public static final String UI_AUTO_REFRESH_INTERVAL = "nifi.ui.autorefresh.interval";
 
+>>>>>>> b6d3a4987a (Trigger CI pipeline)
     // cluster common properties
     public static final String CLUSTER_PROTOCOL_HEARTBEAT_INTERVAL = "nifi.cluster.protocol.heartbeat.interval";
     public static final String CLUSTER_PROTOCOL_HEARTBEAT_MISSABLE_MAX = "nifi.cluster.protocol.heartbeat.missable.max";
@@ -807,6 +809,8 @@ public class NiFiProperties extends ApplicationProperties {
         return new File(getProperty(NAR_LIBRARY_AUTOLOAD_DIRECTORY, DEFAULT_NAR_LIBRARY_AUTOLOAD_DIR));
     }
 
+<<<<<<< HEAD
+=======
     // getters for ui properties //
 
     /**
@@ -818,15 +822,7 @@ public class NiFiProperties extends ApplicationProperties {
         return this.getProperty(UI_BANNER_TEXT, StringUtils.EMPTY);
     }
 
-    /**
-     * Returns the auto refresh interval in seconds.
-     *
-     * @return the interval over which the properties should auto refresh
-     */
-    public String getAutoRefreshInterval() {
-        return getProperty(UI_AUTO_REFRESH_INTERVAL);
-    }
-
+>>>>>>> b6d3a4987a (Trigger CI pipeline)
     /**
      * Returns true if auto reload of the keystore and truststore is enabled.
      *

@@ -198,7 +198,11 @@ public class SplitRecord extends AbstractProcessor {
                 }
             });
         } catch (final ProcessException pe) {
-            getLogger().error("Failed to split {}", new Object[] {original, pe});
+<<<<<<< HEAD
+            getLogger().error("Failed to split", original, pe);
+=======
+            getLogger().error("Failed to split {}", original, pe);
+>>>>>>> b6d3a4987a (Trigger CI pipeline)
             session.remove(splits);
             session.transfer(original, REL_FAILURE);
             return;
@@ -211,7 +215,7 @@ public class SplitRecord extends AbstractProcessor {
             session.putAttribute(split, FRAGMENT_COUNT, String.valueOf(splits.size()));
         }
         session.transfer(splits, REL_SPLITS);
-        getLogger().info("Successfully split {} into {} FlowFiles, each containing up to {} records", new Object[] {original, splits.size(), maxRecords});
+        getLogger().info("Successfully split {} into {} FlowFiles, each containing up to {} records", original, splits.size(), maxRecords);
     }
 
 }

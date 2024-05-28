@@ -71,7 +71,7 @@ public final class ChannelDispatcher implements Runnable {
                 selectServerSocketKeys();
                 selectSocketChannelKeys();
             } catch (final Exception ex) {
-                LOGGER.warn("Key selection failed: {} Normal during shutdown.", new Object[]{ex});
+                LOGGER.warn("Key selection failed: Normal during shutdown.", ex);
             }
         }
     }
@@ -110,7 +110,7 @@ public final class ChannelDispatcher implements Runnable {
             }
             itr.remove(); // do this so that the next select operation returns a positive value; otherwise, it will return 0.
             if (reader != null && LOGGER.isDebugEnabled()) {
-                LOGGER.debug(this + " New Connection established.  Server channel: " + channel + " Reader: " + reader);
+                LOGGER.debug("{} New Connection established.  Server channel: {} Reader: {}", this, channel, reader);
             }
         }
     }
@@ -145,7 +145,7 @@ public final class ChannelDispatcher implements Runnable {
                 reader.setScheduledFuture(readerFuture);
             }
             if (reader != null && LOGGER.isDebugEnabled()) {
-                LOGGER.debug(this + " New Connection established.  Server channel: " + channel + " Reader: " + reader);
+                LOGGER.debug("{} New Connection established.  Server channel: {} Reader: {}", this, channel, reader);
             }
         }
 

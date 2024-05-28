@@ -35,11 +35,15 @@
         <module>nifi-registry-docker-maven</module>
     </modules>
     <properties>
-        <spring.boot.version>3.2.5</spring.boot.version>
+        <spring.boot.version>3.3.0</spring.boot.version>
+<<<<<<< HEAD
         <flyway.version>10.13.0</flyway.version>
+=======
+        <flyway.version>10.15.0</flyway.version>
+>>>>>>> b6d3a4987a (Trigger CI pipeline)
         <flyway.tests.version>10.0.0</flyway.tests.version>
         <swagger.ui.version>3.12.0</swagger.ui.version>
-        <jgit.version>6.9.0.202403050737-r</jgit.version>
+        <jgit.version>6.10.0.202406032230-r</jgit.version>
         <org.apache.sshd.version>2.12.1</org.apache.sshd.version>
     </properties>
     <dependencyManagement>

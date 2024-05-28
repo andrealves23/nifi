@@ -57,7 +57,7 @@ public class ShellRunner {
         builder.redirectErrorStream(true);
 
         final List<String> builderCommand = builder.command();
-        logger.debug("Run Command '{}': {}", new Object[]{description, builderCommand});
+        logger.debug("Run Command '{}': {}", description, builderCommand);
 
         final Process proc = builder.start();
 
@@ -72,7 +72,7 @@ public class ShellRunner {
                     int lineCount = 0;
                     while ((line = reader.readLine()) != null) {
                         if (logger.isTraceEnabled()) {
-                            logger.trace((++lineCount) + " - " + line);
+                            logger.trace("{} - {}", (++lineCount), line);
                         }
                         lines.add(line.trim());
                     }
@@ -96,7 +96,7 @@ public class ShellRunner {
             try {
                 proc.destroyForcibly();
             } catch (Exception e) {
-                logger.debug("Process failed to destroy: " + e.getMessage(), e);
+                logger.debug("Process failed to destroy", e);
             }
             throw new IllegalStateException("Shell command '" + command + "' did not complete during the allotted time period");
         }

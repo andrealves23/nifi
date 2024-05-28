@@ -361,10 +361,10 @@ public class PutHBaseRecord extends AbstractPutHBase {
     private byte[] handleComplexField(Record record, String field, String complexFieldStrategy) throws PutCreationFailedInvokedException {
         switch (complexFieldStrategy) {
             case FAIL_VALUE:
-                getLogger().error("Complex value found for {}; routing to failure", new Object[]{field});
+                getLogger().error("Complex value found for {}; routing to failure", field);
                 throw new PutCreationFailedInvokedException(String.format("Complex value found for %s; routing to failure", field));
             case WARN_VALUE:
-                getLogger().warn("Complex value found for {}; skipping", new Object[]{field});
+                getLogger().warn("Complex value found for {}; skipping", field);
                 return null;
             case TEXT_VALUE:
                 final String value = record.getAsString(field);
@@ -402,7 +402,7 @@ public class PutHBaseRecord extends AbstractPutHBase {
                 }
 
                 if (timestamp == null) {
-                    getLogger().warn("The value of timestamp field " + timestampFieldName + " was null, record will be inserted with latest timestamp");
+                    getLogger().warn("The value of timestamp field {} was null, record will be inserted with latest timestamp", timestampFieldName);
                 }
             } else {
                 timestamp = null;

@@ -25,7 +25,11 @@
     <artifactId>nifi-email-processors</artifactId>
     <packaging>jar</packaging>
     <properties>
-        <spring.integration.version>6.2.4</spring.integration.version>
+<<<<<<< HEAD
+        <spring.integration.version>6.2.5</spring.integration.version>
+=======
+        <spring.integration.version>6.3.0</spring.integration.version>
+>>>>>>> b6d3a4987a (Trigger CI pipeline)
         <poi.version>5.2.5</poi.version>
     </properties>
 

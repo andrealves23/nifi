@@ -758,7 +758,7 @@ public class FileSystemRepository implements ContentRepository {
         if (path != null) {
             final File file = path.toFile();
             if (!file.delete() && file.exists()) {
-                LOG.warn("Unable to delete {} at path {}", new Object[]{claim, path});
+                LOG.warn("Unable to delete {} at path {}", claim, path);
                 return false;
             }
         }
@@ -1147,7 +1147,7 @@ public class FileSystemRepository implements ContentRepository {
             try {
                 out.close();
             } catch (final IOException ioe) {
-                LOG.warn("Unable to close Output Stream for " + claim, ioe);
+                LOG.warn("Unable to close Output Stream for {}", claim, ioe);
             }
         }
 

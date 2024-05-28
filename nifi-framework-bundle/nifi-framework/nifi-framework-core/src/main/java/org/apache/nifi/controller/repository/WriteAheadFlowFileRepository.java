@@ -278,7 +278,7 @@ public class WriteAheadFlowFileRepository implements FlowFileRepository, SyncLis
                     }
                 }
             } catch (final Exception e) {
-                logger.warn("Failed to read swap file " + swapLocation + " when attempting to find resource claim references", e);
+                logger.warn("Failed to read swap file {} when attempting to find resource claim references", swapLocation, e);
             }
         }
 
@@ -685,7 +685,7 @@ public class WriteAheadFlowFileRepository implements FlowFileRepository, SyncLis
             this.swapLocationSuffixes.remove(normalizeSwapLocation(swapLocation));
         }
 
-        logger.info("Repository updated to reflect that {} FlowFiles were swapped in to {}", new Object[]{swapRecords.size(), queue});
+        logger.info("Repository updated to reflect that {} FlowFiles were swapped in to {}", swapRecords.size(), queue);
     }
 
     void deleteRecursively(final File dir) {
@@ -853,7 +853,7 @@ public class WriteAheadFlowFileRepository implements FlowFileRepository, SyncLis
                     final long millis = TimeUnit.MILLISECONDS.convert(end - start, TimeUnit.NANOSECONDS);
                     logger.info("Successfully checkpointed FlowFile Repository with {} records in {} milliseconds", numRecordsCheckpointed, millis);
                 } catch (final Throwable t) {
-                    logger.error("Unable to checkpoint FlowFile Repository due to " + t.toString(), t);
+                    logger.error("Unable to checkpoint FlowFile Repository", t);
                 }
             }
         };

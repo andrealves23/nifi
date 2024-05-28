@@ -27,11 +27,13 @@
         <module>nifi-custom-ui-utilities</module>
         <module>nifi-web-security</module>
         <module>nifi-web-api</module>
-        <module>nifi-web-error</module>
         <module>nifi-web-docs</module>
         <module>nifi-web-content-viewer</module>
-        <module>nifi-web-ui</module>
+<<<<<<< HEAD
         <module>nifi-web-frontend</module>
+=======
+        <module>nifi-ui</module>
+>>>>>>> b6d3a4987a (Trigger CI pipeline)
         <module>nifi-jetty</module>
         <module>nifi-web-content-access</module>
         <module>nifi-ui-extension</module>

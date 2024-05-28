@@ -382,7 +382,7 @@ public class ListenHTTP extends AbstractSessionFactoryProcessor {
             toShutdown.destroy();
             clearInit();
         } catch (final Exception ex) {
-            getLogger().warn("unable to cleanly shutdown embedded server due to {}", new Object[] {ex});
+            getLogger().warn("unable to cleanly shutdown embedded server", ex);
             this.server = null;
         }
     }
@@ -564,7 +564,7 @@ public class ListenHTTP extends AbstractSessionFactoryProcessor {
                 createHttpServerFromService(context);
             }
         } catch (Exception e) {
-            getLogger().warn("Failed to start http server during initialization: " + e);
+            getLogger().warn("Failed to start http server during initialization", e);
             context.yield();
             throw new ProcessException("Failed to initialize the server", e);
         }
