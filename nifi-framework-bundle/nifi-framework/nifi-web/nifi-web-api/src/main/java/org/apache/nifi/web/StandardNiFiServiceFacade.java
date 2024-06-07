@@ -4419,8 +4419,7 @@ public class StandardNiFiServiceFacade implements NiFiServiceFacade {
 
     @Override
     public FlowConfigurationEntity getFlowConfiguration() {
-        final FlowConfigurationDTO dto = dtoFactory.createFlowConfigurationDto(properties.getAutoRefreshInterval(),
-                properties.getDefaultBackPressureObjectThreshold(), properties.getDefaultBackPressureDataSizeThreshold());
+        final FlowConfigurationDTO dto = dtoFactory.createFlowConfigurationDto(properties.getDefaultBackPressureObjectThreshold(), properties.getDefaultBackPressureDataSizeThreshold());
         final FlowConfigurationEntity entity = new FlowConfigurationEntity();
         entity.setFlowConfiguration(dto);
         return entity;
@@ -5256,6 +5255,42 @@ public class StandardNiFiServiceFacade implements NiFiServiceFacade {
         } catch (final IOException | FlowRegistryException e) {
             throw new NiFiCoreException("Failed to remove flow from Flow Registry due to " + e.getMessage(), e);
         }
+    }
+
+    @Override
+    public FlowComparisonEntity getVersionDifference(final String registryId, FlowVersionLocation versionLocationA, FlowVersionLocation versionLocationB) {
+        final FlowComparisonEntity result = new FlowComparisonEntity();
+
+        if (versionLocationA.equals(versionLocationB)) {
+            // If both versions are the same, there is no need for comparison. Comparing them should have the same result but with the cost of some calls to the registry.
+            // Note: because of this optimization we return an empty non-error response in case of non-existing registry, bucket, flow or version if the versions are the same.
+            result.setComponentDifferences(Collections.emptySet());
+            return result;
+        }
+
+        final FlowSnapshotContainer snapshotA = this.getVersionedFlowSnapshot(
+                registryId, versionLocationA.getBranch(), versionLocationA.getBucketId(), versionLocationA.getFlowId(), versionLocationA.getVersion(), true);
+        final FlowSnapshotContainer snapshotB = this.getVersionedFlowSnapshot(
+                registryId, versionLocationB.getBranch(), versionLocationB.getBucketId(), versionLocationB.getFlowId(), versionLocationB.getVersion(), true);
+
+        final VersionedProcessGroup flowContentsA = snapshotA.getFlowSnapshot().getFlowContents();
+        final VersionedProcessGroup flowContentsB = snapshotB.getFlowSnapshot().getFlowContents();
+
+        final FlowComparator flowComparator = new StandardFlowComparator(
+                new StandardComparableDataFlow("Flow A", flowContentsA),
+                new StandardComparableDataFlow("Flow B", flowContentsB),
+                Collections.emptySet(), // Replacement of an external ControllerService is recognized as property change
+                new ConciseEvolvingDifferenceDescriptor(),
+                Function.identity(),
+                VersionedComponent::getIdentifier,
+                FlowComparatorVersionedStrategy.DEEP
+            );
+
+        final FlowComparison flowComparison = flowComparator.compare();
+        final Set<ComponentDifferenceDTO> differenceDtos = dtoFactory.createComponentDifferenceDtosForLocalModifications(flowComparison, flowContentsA, controllerFacade.getFlowManager());
+        result.setComponentDifferences(differenceDtos);
+
+        return result;
     }
 
     @Override

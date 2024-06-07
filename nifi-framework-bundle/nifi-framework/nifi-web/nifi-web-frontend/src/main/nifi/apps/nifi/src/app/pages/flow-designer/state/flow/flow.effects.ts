@@ -147,12 +147,15 @@ import {
 } from '../../../../state/property-verification/property-verification.selectors';
 import { VerifyPropertiesRequestContext } from '../../../../state/property-verification';
 import { BackNavigation } from '../../../../state/navigation';
+import { Storage } from '../../../../service/storage.service';
+import { NiFiCommon } from '../../../../service/nifi-common.service';
 
 @Injectable()
 export class FlowEffects {
     constructor(
         private actions$: Actions,
         private store: Store<NiFiState>,
+        private storage: Storage,
         private flowService: FlowService,
         private controllerServiceService: ControllerServiceService,
         private registryService: RegistryService,
@@ -1437,6 +1440,8 @@ export class FlowEffects {
                     if (parameterContext != null) {
                         editDialogReference.componentInstance.parameterContext = parameterContext;
                         editDialogReference.componentInstance.goToParameter = () => {
+                            this.storage.setItem<number>(NiFiCommon.EDIT_PARAMETER_CONTEXT_DIALOG_ID, 1);
+
                             const commandBoundary: string[] = ['/parameter-contexts'];
                             const commands: string[] = [...commandBoundary, parameterContext.id, 'edit'];
                             goTo(commands, commandBoundary, 'Parameter');
@@ -1614,9 +1619,10 @@ export class FlowEffects {
                         this.store.dispatch(ErrorActions.clearBannerErrors());
                         if (request.entity.id === currentProcessGroupId) {
                             this.store.dispatch(
-                                FlowActions.enterProcessGroup({
+                                FlowActions.loadProcessGroup({
                                     request: {
-                                        id: currentProcessGroupId
+                                        id: currentProcessGroupId,
+                                        transitionRequired: true
                                     }
                                 })
                             );
@@ -2281,7 +2287,7 @@ export class FlowEffects {
             mergeMap(([requests, processGroupId]) => {
                 if (requests.length === 1) {
                     return from(this.flowService.deleteComponent(requests[0])).pipe(
-                        map(() => {
+                        map((response) => {
                             const deleteResponses: DeleteComponentResponse[] = [
                                 {
                                     id: requests[0].id,
@@ -2299,6 +2305,8 @@ export class FlowEffects {
                                         type: ComponentType.Connection
                                     })
                                 );
+                            } else {
+                                this.store.dispatch(FlowActions.loadComponentsForConnection({ connection: response }));
                             }
 
                             return FlowActions.deleteComponentsSuccess({

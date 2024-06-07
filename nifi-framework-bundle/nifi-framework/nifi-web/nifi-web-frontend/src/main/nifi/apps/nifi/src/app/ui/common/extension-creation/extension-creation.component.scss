@@ -21,8 +21,6 @@
     @include mat.button-density(-1);
 
     .listing-table {
-        @include mat.table-density(-4);
-
         table {
             .fa.fa-shield {
                 width: 10px;
@@ -33,7 +31,6 @@
     }
 
     .selected-type-name {
-        font-size: 16px;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
@@ -45,8 +42,6 @@
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
-        font-size: 14px;
-        line-height: 16px;
         letter-spacing: 0.25px;
     }
 
@@ -55,9 +50,6 @@
         display: -webkit-box;
         -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
-        font-size: 14px;
-        line-height: 17px;
-        height: 50px;
     }
 
     .no-selected-type {
